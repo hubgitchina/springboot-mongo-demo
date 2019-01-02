@@ -25,7 +25,7 @@ import lombok.Setter;
 @Setter
 public abstract class AbstractMongoConfig {
 
-	// Mongo DB Properties
+	// MongoDB Properties
 	private String hostPort, database, username, password;
 
 	public MongoDbFactory mongoDbFactory() throws Exception {
