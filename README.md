@@ -1,5 +1,5 @@
 MongoDB使用说明
-1.	MongoDB安装部署
+一.	MongoDB安装部署
 
 本文档使用MongoDB 4.0.4，Spring Boot 1.5.13，spring-data-mongodb 1.10.11 版本。
 
@@ -7,7 +7,7 @@ MongoDB使用说明
 
 此处是在docker容器中安装部署。
 
-1)	下载MongoDB
+1	下载MongoDB
 
 创建mongo目录
 
@@ -21,7 +21,7 @@ cd ~/mongo
 
 docker pull mongo
 
-2)	运行MongoDB
+2	运行MongoDB
 
 docker run --name mongodb-server -p 27017:27017 -v $PWD/db:/data/db -d mongo:latest –auth
 
@@ -33,7 +33,7 @@ docker run --name mongodb-server -p 27017:27017 -v $PWD/db:/data/db -d mongo:lat
 
 –auth：表示连接mongo需要授权
 
-3)	连接mongo容器
+3	连接mongo容器
 
 docker run -it mongo:latest mongo --host 192.168.105.80
 
@@ -43,17 +43,17 @@ IP为当前安装MongoDB的主机IP地址。
  
 如果出现异常，关掉防火墙，或者放行27017端口即可。
 
-4)	进入mongo容器
+4	进入mongo容器
 
 docker exec -it mongodb-server /bin/bash
 
-5)	进入MongoDB
+5	进入MongoDB
 
 mongo
 
 成功进入MongoDB会出现如下信息：
  
-6)	设置权限添加用户
+6	设置权限添加用户
 
 使用MongoDB内置数据库admin
 
@@ -103,7 +103,7 @@ roles: [ { role: "readWrite", db: "demo" } ]
 
 );
  
-2.	Spring-data-mongo开发详解
+二.	Spring-data-mongo开发详解
 
 MongoDB概念解释：
 
@@ -115,19 +115,19 @@ MongoDB概念解释：
 
 使用MongoDB，同传统关系数据库一样，也是建库建集合，再做相应的文档增删改查。
 
-1)	pom.xml依赖
+1	pom.xml依赖
 
 在pom.xml加入spring-data-mongo依赖
  
 注：此处使用是springboot1.5.13，如果不指定spring-data-mongo版本，默认会导入1.10.12，该版本在使用某些接口时会出现异常，降低到1.10.11版本则无问题。
 
-2)	application.properties配置
+2	application.properties配置
 
 在application.properties文件中增加mongo配置，这里实现了连接多数据源
 
 database数据库如果未创建，会自动创建。
 
-3)	创建数据实体类
+3	创建数据实体类
 
 创建数据实体类，会在程序对该实体进行数据操作时，自动在MongoDB数据库中创建对应的集合
 
@@ -137,23 +137,23 @@ database数据库如果未创建，会自动创建。
 
 @Field注解为数据库中集合的字段名称，不使用该注解时，默认字段名为属性名。建议使用该注解自定义字段名，同时名字尽量短，可以节省存储空间
 
-4.	单数据源CRUD
+4	单数据源CRUD
 
-1)	继承MongoRepository
+1	继承MongoRepository
 
 直接继承MongoRepository，默认已实现基本的CRUD方法
 
-2)	使用MongoTemplate
+2	使用MongoTemplate
 
 直接注入MongoTemplate
 
 注：默认保存方法还有insert，区别在于save时，如果记录已存在，会覆盖插入，insert时，如果记录已存在，会抛异常。
 
-5.	多数据源CRUD
+5	多数据源CRUD
 
-1)	自定义抽象类实现MongoDbFactory方法
+1	自定义抽象类实现MongoDbFactory方法
  
-2)	不同数据源配置实现（primary数据源）
+2	不同数据源配置实现（primary数据源）
  
 如果通过继承MongoRepository方式实现数据操作，则该DAO接口类必须在此路径下。
 
@@ -161,25 +161,25 @@ database数据库如果未创建，会自动创建。
 
 默认插入数据时会产生数据实体类的路径，如下图：
  
-3)	不同数据源配置实现（secondary数据源）
+3	不同数据源配置实现（secondary数据源）
  
-4)	继承MongoRepository
+4	继承MongoRepository
 
 不同数据源根据上面的配置类，指定的basePackages路径，继承MongoRepository，其它操作方式同单数据源一致。
 
-5)	使用MongoTemplate
+5	使用MongoTemplate
 
 注入时增加注解@Qualifier 
 
 其它操作方式同单数据源时，使用MongoTemplate一致。
 
-6)	启动类排除Mongo配置
+6	启动类排除Mongo配置
 
 由于已自定义mongo配置，故需在启动类增加排除mongo默认的配置
 
 @SpringBootApplication(exclude = { MongoAutoConfiguration.class, MongoDataAutoConfiguration.class })
 
-7)	嵌套查询
+7	嵌套查询
 
 当数据类型为嵌套类型，需要根据嵌套的子对象属性做查询时，如根据storeId进行查询，则需要根据storeInfo.storeId进行字段匹配查询
 
