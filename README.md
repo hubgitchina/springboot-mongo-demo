@@ -5,6 +5,7 @@ MongoDB使用说明
 注：Spring boot 1.5.13如果不指定spring-data-mongodb版本时，默认会导入1.10.12版本，该版本会导致使用MongoTemplate时出现异常，所以需要降版本，最高支持到1.10.11。
 
 此处是在docker容器中安装部署。
+
 1)	下载MongoDB
 创建mongo目录
 mkdir -p ~/mongo
@@ -14,6 +15,7 @@ cd ~/mongo
 
 下载MongoDB
 docker pull mongo
+
 2)	运行MongoDB
 docker run --name mongodb-server -p 27017:27017 -v $PWD/db:/data/db -d mongo:latest –auth
 
@@ -21,16 +23,17 @@ docker run --name mongodb-server -p 27017:27017 -v $PWD/db:/data/db -d mongo:lat
 -p 27017:27017：将容器的27017端口映射到主机的27017端口
 -v $PWD/db:/data/db：将当前目录下db挂在到容器的/data/db，作为mongo的数据库目录
 –auth：表示连接mongo需要授权
+
 3)	连接mongo容器
 docker run -it mongo:latest mongo --host 192.168.105.80
 IP为当前安装MongoDB的主机IP地址。
 连接成功会返回如下信息：
  
-如果出现异常如下图所示：
- 
-关掉防火墙，或者放行27017端口即可。
+如果出现异常，关掉防火墙，或者放行27017端口即可。
+
 4)	进入mongo容器
 docker exec -it mongodb-server /bin/bash
+
 5)	进入MongoDB
 mongo
 
@@ -75,6 +78,7 @@ MongoDB概念解释：
 文档（document）等同于表内一条记录
 
 使用MongoDB，同传统关系数据库一样，也是建库建集合，再做相应的文档增删改查。
+
 1)	pom.xml依赖
 在pom.xml加入spring-data-mongo依赖
  
