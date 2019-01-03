@@ -15,5 +15,5 @@ public interface ShopServiceRepository {
 
 	List<ShopEntity> findAll();
 
-	void deleteShop(String id);
+	void deleteShop(long id);
 }

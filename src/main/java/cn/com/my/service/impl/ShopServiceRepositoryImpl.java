@@ -46,7 +46,7 @@ public class ShopServiceRepositoryImpl implements ShopServiceRepository {
 	}
 
 	@Override
-	public void deleteShop(String id) {
+	public void deleteShop(long id) {
 
 		shopRepository.delete(id);
 	}

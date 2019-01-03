@@ -6,7 +6,7 @@ import org.springframework.data.mongodb.repository.MongoRepository;
 
 import cn.com.my.entity.ShopEntity;
 
-public interface ShopRepository extends MongoRepository<ShopEntity, String> {
+public interface ShopRepository extends MongoRepository<ShopEntity, Long> {
 
 	List<ShopEntity> findByShopNameLike(String shopName);
 }

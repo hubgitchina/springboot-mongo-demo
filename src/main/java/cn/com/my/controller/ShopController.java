@@ -40,7 +40,7 @@ public class ShopController {
 	}
 
 	@GetMapping("/deleteShop")
-	public String deleteShop(@RequestParam String id) {
+	public String deleteShop(@RequestParam long id) {
 
 		shopServiceRepository.deleteShop(id);
 
