@@ -1,4 +1,5 @@
 MongoDB使用说明
+
 一.	MongoDB安装部署
 
 本文档使用MongoDB 4.0.4，Spring Boot 1.5.13，spring-data-mongodb 1.10.11 版本。
@@ -139,11 +140,11 @@ database数据库如果未创建，会自动创建。
 
 4	单数据源CRUD
 
-1	继承MongoRepository
+4.1	继承MongoRepository
 
 直接继承MongoRepository，默认已实现基本的CRUD方法
 
-2	使用MongoTemplate
+4.2	使用MongoTemplate
 
 直接注入MongoTemplate
 
@@ -151,9 +152,9 @@ database数据库如果未创建，会自动创建。
 
 5	多数据源CRUD
 
-1	自定义抽象类实现MongoDbFactory方法
+5.1	自定义抽象类实现MongoDbFactory方法
  
-2	不同数据源配置实现（primary数据源）
+5.2	不同数据源配置实现（primary数据源）
  
 如果通过继承MongoRepository方式实现数据操作，则该DAO接口类必须在此路径下。
 
@@ -161,25 +162,25 @@ database数据库如果未创建，会自动创建。
 
 默认插入数据时会产生数据实体类的路径，如下图：
  
-3	不同数据源配置实现（secondary数据源）
+5.3	不同数据源配置实现（secondary数据源）
  
-4	继承MongoRepository
+5.4	继承MongoRepository
 
 不同数据源根据上面的配置类，指定的basePackages路径，继承MongoRepository，其它操作方式同单数据源一致。
 
-5	使用MongoTemplate
+5.5	使用MongoTemplate
 
 注入时增加注解@Qualifier 
 
 其它操作方式同单数据源时，使用MongoTemplate一致。
 
-6	启动类排除Mongo配置
+5.6	启动类排除Mongo配置
 
 由于已自定义mongo配置，故需在启动类增加排除mongo默认的配置
 
 @SpringBootApplication(exclude = { MongoAutoConfiguration.class, MongoDataAutoConfiguration.class })
 
-7	嵌套查询
+5.7	嵌套查询
 
 当数据类型为嵌套类型，需要根据嵌套的子对象属性做查询时，如根据storeId进行查询，则需要根据storeInfo.storeId进行字段匹配查询
 
